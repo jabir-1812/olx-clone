@@ -13,40 +13,40 @@ import PostAd from "./pages/Post_ad/PostAd";
 import ProductDetails from "./pages/Product_details/ProductDetails";
 
 export const dbContext=createContext();
-const db=[
-    {
-        id:1,
-        name:"Car",
-        category:"car",
-        subcategory:"car",
-        image:"car.jpg",
-        description:"description",
-        price:100,
-        state:"kerala",
-        district:"calicut",
-        place:"calicut"
-    },
-    {
-        id:2,
-        name:"Bike",
-        category:"bike",
-        subcategory:"bike",
-        image:"bike.jpg",
-        description:"description",
-        price:100
-    },
-    {
-        id:3,
-        name:"Mobile",
-        category:"mobile",
-        subcategory:"mobile",
-        image:"mobile.jpg",
-        description:"description",
-        price:100
-    },
+// const db=[
+//     {
+//         id:1,
+//         name:"Car",
+//         category:"car",
+//         subcategory:"car",
+//         image:"car.jpg",
+//         description:"description",
+//         price:100,
+//         state:"kerala",
+//         district:"calicut",
+//         place:"calicut"
+//     },
+//     {
+//         id:2,
+//         name:"Bike",
+//         category:"bike",
+//         subcategory:"bike",
+//         image:"bike.jpg",
+//         description:"description",
+//         price:100
+//     },
+//     {
+//         id:3,
+//         name:"Mobile",
+//         category:"mobile",
+//         subcategory:"mobile",
+//         image:"mobile.jpg",
+//         description:"description",
+//         price:100
+//     },
     
 
-]
+// ]
 
 
 
