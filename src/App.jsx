@@ -1,5 +1,7 @@
-import { useState, createContext } from "react";
-import {BrowserRouter, Routes, Route, Link} from 'react-router-dom'
+import { useState, createContext, useEffect } from "react";
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 
 import './App.css'
 import { Navbar } from "./components/Navbar";
@@ -12,63 +14,40 @@ import MobileCategory from "./pages/Category/MobileCategory";
 import PostAd from "./pages/Post_ad/PostAd";
 import ProductDetails from "./pages/Product_details/ProductDetails";
 
-export const dbContext=createContext();
-// const db=[
-//     {
-//         id:1,
-//         name:"Car",
-//         category:"car",
-//         subcategory:"car",
-//         image:"car.jpg",
-//         description:"description",
-//         price:100,
-//         state:"kerala",
-//         district:"calicut",
-//         place:"calicut"
-//     },
-//     {
-//         id:2,
-//         name:"Bike",
-//         category:"bike",
-//         subcategory:"bike",
-//         image:"bike.jpg",
-//         description:"description",
-//         price:100
-//     },
-//     {
-//         id:3,
-//         name:"Mobile",
-//         category:"mobile",
-//         subcategory:"mobile",
-//         image:"mobile.jpg",
-//         description:"description",
-//         price:100
-//     },
-    
 
-// ]
 
 
 
 export default function App() {
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(null);
+
+    useEffect(() => {
+        //after successfull register or login, 
+        //this onAuthStateChanged() function will automatically run by Firebase.
+        //and store the logged in user
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            setIsUserLoggedIn(user);
+        });
+
+        return () => unsubscribe();
+    }, []);
     
     return(
         <>
-        <dbContext.Provider value={{db}}>
             <BrowserRouter>
-                <Navbar></Navbar>
+                <Navbar isUserLoggedIn={isUserLoggedIn}></Navbar>
                 <Routes>
-                    <Route path="/" element={<Home/>}></Route>
+                    {/* <Route path="/" element={<Home/>}></Route>
                     <Route path="/category/all" element={<AllCategory/>}/>
                     <Route path="/category/cars" element={<CarCategory/>}/>
                     <Route path="/category/bikes" element={<BikeCategory/>}/>
                     <Route path="/category/mobiles" element={<MobileCategory/>}/>
                     <Route path="/product_details/:productId" element={<ProductDetails/>}/>
                     <Route path="/sell" element={<PostAd/>}/>
-                    <Route path="/myAds" element={<MyAds/>}></Route>
+                    <Route path="/myAds" element={<MyAds/>}></Route> */}
+                    <Route path="/" element={<Home/>}></Route>
                 </Routes>
             </BrowserRouter>
-        </dbContext.Provider>
         </>
     )
 }
