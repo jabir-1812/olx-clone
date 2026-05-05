@@ -241,9 +241,6 @@ export function Navbar({isUserLoggedIn}){
                                     className="bg-blue-300 px-2 rounded-full cursor-pointer">
                                 👤
                             </div>
-                            <div className="text-xs font-bold">
-                                User
-                            </div>
 
                             {/* profile dropdown */}
                             {isProfileDropdownOpen && (
@@ -298,7 +295,7 @@ export function Navbar({isUserLoggedIn}){
                     /> : ""}
 
             <div>
-                <Link to='/sell' className="text-lg font-bold px-5 py-2 border-5 border-blue-500 rounded-full">
+                <Link to='/post_ad' className="text-lg font-bold px-5 py-2 border-5 border-blue-500 rounded-full">
                     + Sell
                 </Link>
             </div>
@@ -334,7 +331,8 @@ function RegisterAndLoginModal(
             onClick={closeTheRegisterAndLoginModal} //closes the modal when clicking outside the modal
             className="fixed inset-0 bg-black/50 flex items-center justify-center">
             {/* modal content */}
-            <div onClick={(e)=>e.stopPropagation()} className="bg-white">
+            <div onClick={(e)=>e.stopPropagation()} className="bg-white p-5">
+                    {/* modal close button */}
                     <div className="flex justify-end">
                         <div onClick={closeTheRegisterAndLoginModal}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -342,36 +340,64 @@ function RegisterAndLoginModal(
                             </svg>
                         </div>
                     </div>
+                    <div className="flex items-center">
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div className="flex justify-center">
+                                <img src="/loginPageImg1.webp" className="w-[25%]" alt="" />
+                            </div>
+                            <div className="text-lg font-medium">
+                                Help us become one of the safest places to buy and sell
+                            </div>
+                        </div>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </div>
+                    </div>
                     {showLogin ?
                      (
-                        <div>
-                            <form action="">
+                        <div className="">
+                            <form>
                                 <div className="text-red-500">{loginErrorMsg && loginErrorMsg}</div>
-                                <div>
+                                <div className="flex flex-col items-center my-5">
                                     <input
+                                        className="border-2 border-blue-900 rounded-md px-5 py-2 w-full"
                                         onChange={(e)=>setEmail(e.target.value)} 
                                         type="email" placeholder="email" />
                                     <div className="text-red-500">
                                         {emailErrorMsg && emailErrorMsg}
                                     </div>
                                 </div>
-                                <div>
-                                    <input 
-                                        onChange={(e)=>setPassword(e.target.value)}
-                                        type="password" placeholder="password" />
+                                <div className="flex flex-col items-center">
+                                    
+                                        <input 
+                                            className="border-2 border-blue-900 rounded-md px-5 py-2 w-full"
+                                            onChange={(e)=>setPassword(e.target.value)}
+                                            type="password" placeholder="password" />
+                                    
                                     <div className="text-red-500">
                                         {passwordErrorMsg && passwordErrorMsg}
                                     </div>
                                     
                                 </div>
-                                <div>
+                                <div className="flex justify-center">
                                     <button 
+                                        className="bg-blue-500 rounded-md px-5 py-2 font-medium text-white my-5"
                                         onClick={handleLogin}
                                         type="button">Login</button>
                                 </div>
                             </form>
 
-                            <div className="bg-red-100" onClick={showRegisterForm}>Register</div>
+                            <div className="flex gap-5 justify-center text-sm" onClick={showRegisterForm}>
+                                <div>Don't have account ?</div>
+                                <div className="text-blue-600 cursor-pointer">Register</div>
+                            </div>
                         </div>
                      )
                      :
@@ -379,37 +405,44 @@ function RegisterAndLoginModal(
                         <div>
                             <form action="">
                                 <div className="text-red-500">{registerErrorMsg && registerErrorMsg}</div>
-                                <div>
+                                <div className="flex flex-col items-center mb-5">
                                     <input
+                                        className="border-2 border-blue-900 rounded-md px-5 py-2 w-full"
                                         onChange={(e)=>setEmail(e.target.value)} 
                                         type="email" placeholder="email" />
                                     <div className="text-red-500">
                                         {emailErrorMsg && emailErrorMsg}
                                     </div>
                                 </div>
-                                <div>
+                                <div className="flex flex-col items-center mb-5">
                                     <input 
+                                        className="border-2 border-blue-900 rounded-md px-5 py-2 w-full"
                                         onChange={(e)=>setPassword(e.target.value)}
                                         type="password" placeholder="password" />
                                     <div className="text-red-500">
                                         {passwordErrorMsg && passwordErrorMsg}
                                     </div>
                                 </div>
-                                <div>
+                                <div className="flex flex-col items-center mb-5">
                                     <input 
+                                        className="border-2 border-blue-900 rounded-md px-5 py-2 w-full"
                                         onChange={(e)=>setConfirmPassword(e.target.value)}
                                         type="password" placeholder="confirm password" />
                                     <div className="text-red-500">
                                         {confirmPasswordErrorMsg && confirmPasswordErrorMsg}
                                     </div>
                                 </div>
-                                <div>
+                                <div className="flex justify-center">
                                     <button 
+                                        className="bg-blue-500 rounded-md px-5 py-2 font-medium text-white my-5"
                                         onClick={handleRegister}
                                         type="button">Register</button>
                                 </div>
                             </form>
-                            <div onClick={showLoginForm}>Login</div> 
+                            <div className="flex gap-5 justify-center text-sm" onClick={showLoginForm}>
+                                <div>Already have an account ?</div>
+                                <div className="text-blue-600 cursor-pointer">Login</div>
+                            </div> 
                         </div> 
                      )}        
             </div>
