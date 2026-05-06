@@ -12,6 +12,7 @@ import CarCategory from "./pages/Category/CarCategory";
 import BikeCategory from "./pages/Category/BikeCategory";
 import MobileCategory from "./pages/Category/MobileCategory";
 import PostAd from "./pages/Post_ad/PostAd";
+import Success from "./pages/Post_ad/Success";
 import ProductDetails from "./pages/Product_details/ProductDetails";
 
 
@@ -39,6 +40,7 @@ export default function App() {
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/post_ad" element={<PostAd/>}/>
+                    <Route path="/post_ad/success/:product_id" element={<Success/>}></Route>
                     <Route path="/my_ads" element={<MyAds/>}/>
                     <Route path="/product_details/:product_id" element={<ProductDetails/>}/>
                 </Routes>
