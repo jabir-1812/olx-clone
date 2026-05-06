@@ -179,13 +179,13 @@ export function Navbar({isUserLoggedIn}){
     },[])
 
     return(
-        <nav className="flex justify-between items-center px-[2%] py-1 gap-5 bg-blue-50">
+        <nav className="flex justify-between items-center px-[2%] py-1 lg:gap-5 bg-blue-50">
 
             <Link className="" to="/">
                 <img src="/olx_logo_2025.svg" className="w-15" alt="" />
             </Link>
 
-            <div className="flex items-center justify-around px-[1%] py-3 gap-10 rounded-full bg-white border-1 border-black/25">
+            <div className="flex items-center justify-around px-[1%] py-3 lg:gap-10 rounded-full bg-white border-1 border-black/25">
                 <div className="">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -202,7 +202,7 @@ export function Navbar({isUserLoggedIn}){
                 </div>
             </div>
                 
-            <div className="flex items-center grow border-2 border-black/25 rounded-full py-3 pl-[3%] pr-[1%]">
+            <div className="hidden lg:flex items-center grow border-2 border-black/25 rounded-full py-3 pl-[3%] pr-[1%]">
                 <input className=" grow" type="text" placeholder="search" />
                 <div className="bg-blue-500 rounded-full px-[1%] text-white">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6 ">
@@ -297,9 +297,11 @@ export function Navbar({isUserLoggedIn}){
                     /> : ""}
 
             <div>
-                <Link to='/post_ad' className="text-lg font-bold px-5 py-2 border-5 border-blue-500 rounded-full">
-                    + Sell
-                </Link>
+                <div className="flex justify-center text-lg font-medium px-3 py-1 border-5 border-blue-500 rounded-full">
+                    <Link to='/post_ad' >
+                        +Sell
+                    </Link>
+                </div>
             </div>
 
         </nav>

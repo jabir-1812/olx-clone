@@ -37,14 +37,6 @@ export default function App() {
             <BrowserRouter>
                 <Navbar isUserLoggedIn={isUserLoggedIn}></Navbar>
                 <Routes>
-                    {/* <Route path="/" element={<Home/>}></Route>
-                    <Route path="/category/all" element={<AllCategory/>}/>
-                    <Route path="/category/cars" element={<CarCategory/>}/>
-                    <Route path="/category/bikes" element={<BikeCategory/>}/>
-                    <Route path="/category/mobiles" element={<MobileCategory/>}/>
-                    <Route path="/product_details/:productId" element={<ProductDetails/>}/>
-                    <Route path="/sell" element={<PostAd/>}/>
-                    <Route path="/myAds" element={<MyAds/>}></Route> */}
                     <Route path="/" element={<Home/>}/>
                     <Route path="/post_ad" element={<PostAd/>}/>
                     <Route path="/my_ads" element={<MyAds/>}/>

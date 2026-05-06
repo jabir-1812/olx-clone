@@ -1,87 +1,5 @@
-// import { useEffect, useState } from "react";
-
-// import { db } from "../../firebase";
-
-// import {
-//   collection,
-//   getDocs,
-// } from "firebase/firestore";
-// import { Link } from "react-router-dom";
-
-// export default function Products() {
-
-//   const [products, setProducts] = useState([]);
-
-//   useEffect(() => {
-
-//     const fetchProducts = async () => {
-
-//       try {
-
-//         const querySnapshot = await getDocs(
-//           collection(db, "items")
-//         );
-
-//         const productList = [];
-
-//         querySnapshot.forEach((doc) => {
-
-//           productList.push({
-//             id: doc.id,
-//             ...doc.data(),
-//           });
-
-//         });
-
-//         setProducts(productList);
-
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-
-//     fetchProducts();
-
-//   }, []);
-
-//   return (
-//     <div>
-
-//       <h1>All Products</h1>
-
-//       {products.map((product) => (
-
-//         <div
-//           key={product.id}
-//           style={{
-//             border: "1px solid gray",
-//             marginBottom: "20px",
-//             padding: "10px",
-//           }}
-//         >
-//             <Link to={`/product_details/${product.id}`}>
-
-//                 <h2>{product.title}</h2>
-
-//                 {/* First image */}
-//                 {product.images?.[0] && (
-//                     <img
-//                     src={product.images[0]}
-//                     width="200"
-//                     alt=""
-//                     />
-//                 )}
-
-//           </Link>
-//         </div>
-
-//       ))}
-
-//     </div>
-//   );
-// }
-
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import { db } from "../../firebase";
 
@@ -89,6 +7,10 @@ import {
   collection,
   getDocs,
 } from "firebase/firestore";
+
+
+
+
 
 export default function Products() {
 
@@ -140,41 +62,100 @@ export default function Products() {
         );
 
   return (
-    <div>
+    <div className="lg:px-20">
 
-      {/* 🔥 Category Buttons */}
-      <div>
+      {/* Category Buttons */}
+      <div className="flex gap-5 flex-wrap  justify-center py-3 border-y-2 border-black/20">
 
         <button
-          onClick={() => setSelectedCategory("All")}
+            className="p-2 border-2 border-black/20 rounded-full"
+            onClick={() => setSelectedCategory("All")}
         >
-          All
+          All Categories
         </button>
 
         <button
-          onClick={() => setSelectedCategory("Electronic")}
+            className="p-2 border-2 border-black/20 rounded-full"
+            onClick={() => setSelectedCategory("Electronic")}
         >
           Electronics
         </button>
 
         <button
-          onClick={() => setSelectedCategory("Vehicle")}
+            className="p-2 border-2 border-black/20 rounded-full"
+            onClick={() => setSelectedCategory("Vehicle")}
         >
           Vehicles
         </button>
 
         <button
-          onClick={() => setSelectedCategory("Furniture")}
+            className="p-2 border-2 border-black/20 rounded-full"
+            onClick={() => setSelectedCategory("Furniture")}
         >
           Furnitures
         </button>
 
       </div>
 
-      <h2>{selectedCategory} Products</h2>
+      <div className="flex py-2">
 
-      {/* 🔥 Show filtered products */}
-      {filteredProducts.map((product) => (
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+                onClick={() => setSelectedCategory("Electronic")}
+            >
+                <img className="bg-blue-50 w-[70%]" src="/electronics.png" alt="" />
+                <div>Electronics</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+                onClick={() => setSelectedCategory("Vehicle")}
+            >
+                <img className="bg-blue-50 w-[70%]" src="/car.png" alt="" />
+                <div>Vehicles</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+                onClick={() => setSelectedCategory("Furniture")}
+            >
+                <img className="bg-blue-50 w-[70%]" src="/furniture.png" alt="" />
+                <div>Furniture</div>
+            </div>
+
+        </div>
+
+
+    <div className="">
+        <div className="text-2xl">Fresh Recommendations</div>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3">
+            {filteredProducts.map((product) => (
+                <div
+                    key={product.id}
+                    className="border border-black/20 p-3 rounded-lg flex-col"
+                >
+                    <Link to={`product_details/${product.id}`}>
+
+                        {product.images?.[0] && (
+                            <img
+                                src={product.images[0]}
+                                width=""
+                                className="w-full"
+                                alt=""
+                            />
+                        )}
+                        <div className="font-bold text-xl">₹ {product?.price}</div>
+                        <div className="text-lg font-medium">{product.title}</div>
+                        <div className="text-md text-black/50">{product?.description}</div>
+                    </Link>
+                </div>
+            ))}
+        </div>
+    </div>
+
+
+      {/* Show filtered products */}
+      {/* {filteredProducts.map((product) => (
 
         <div
           key={product.id}
@@ -199,7 +180,7 @@ export default function Products() {
 
         </div>
 
-      ))}
+      ))} */}
 
     </div>
   );
