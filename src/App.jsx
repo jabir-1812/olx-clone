@@ -47,6 +47,8 @@ export default function App() {
                     <Route path="/myAds" element={<MyAds/>}></Route> */}
                     <Route path="/" element={<Home/>}/>
                     <Route path="/post_ad" element={<PostAd/>}/>
+                    <Route path="/my_ads" element={<MyAds/>}/>
+                    <Route path="/product_details/:product_id" element={<ProductDetails/>}/>
                 </Routes>
             </BrowserRouter>
         </>

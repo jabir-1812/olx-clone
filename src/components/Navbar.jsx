@@ -245,7 +245,9 @@ export function Navbar({isUserLoggedIn}){
                             {/* profile dropdown */}
                             {isProfileDropdownOpen && (
                                 <div className="absolute border -bottom-22">
-                                    <div>My Ads</div>
+                                    <div>
+                                        <Link to='/my_ads'>My Ads</Link>
+                                    </div>
                                     <div 
                                         onClick={handleLogout}
                                         className="bg-red-300"

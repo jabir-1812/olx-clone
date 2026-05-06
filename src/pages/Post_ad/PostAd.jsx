@@ -90,92 +90,7 @@ function ChooseCategory({
 }
 
 
-// function AddPostDetails({
-//     selectedCategory,
-//     selectedSubCategory
-// }){
-//     const [title, setTitle]=useState("")
-//     const [itemImages, setItemImages]=useState([])
 
-//     const handleImageChange = (e) =>{
-//         const files = Array.from(e.target.files)
-
-//         setItemImages(files)
-//     };
-
-//     const uploadToCloudinary = async (file)=>{
-//         const data = new FormData();
-//         data.append("file", file);
-//         data.append("upload_preset", "olx_react_app")
-
-//         const res=await fetch("https://api.cloudinary.com/v1_1/dpanly8em/image/upload",{
-//             method:"POST",
-//             body:data
-//         });
-
-//         const result=await res.json();
-//         return result.secure_url;
-//     }
-
-//     const handleSubmit = async ()=>{
-//         try {
-//             const user = auth.currentUser;
-
-//             if(!user){
-//                 alert("login first");
-//                 return;
-//             }
-
-//             const imageUrls=[];
-
-//             for(let file of itemImages){
-//                 const url = await uploadToCloudinary(file);
-//                 imageUrls.push(url)
-//             }
-
-
-//             await addDoc(collection(db, "items"),{
-//                 title,
-//                 images: imageUrls,
-//                 userId: user.uid,
-//                 createdAt: new Date()
-//             })
-
-//             alert("Uploaded successfully")
-//         } catch (error) {
-//             console.error("error submiting the ad form ===> ", error)
-//         }
-//     }
-//     return(
-//         <div>
-//             Post your ad
-//             <div>
-//                 selected category:{selectedCategory.name}/{selectedSubCategory} change
-//             </div>
-//             <div>
-//                 include some details:
-//             </div>
-//             <div>
-//                 <label htmlFor="">Ad title</label>
-//                 <input type="text" onChange={(e)=>setTitle(e.target.value)}/>
-//             </div>
-//             <div>
-//                 <label htmlFor="">Description</label>
-//                 <textarea type="text" />
-//             </div>
-//             <div>
-//                 <label htmlFor="">Set a price</label>
-//                 <input type="number" />
-//             </div>
-//             <div>
-//                 <input type="file" accept="image/*" onChange={handleImageChange} />
-//             </div>
-//             <div>
-//                 <button onClick={handleSubmit}>Submit</button>
-//             </div>
-//         </div>
-//     )
-// }
 function AddPostDetails({
     selectedCategory,
     selectedSubCategory
@@ -229,6 +144,8 @@ function AddPostDetails({
 
             await addDoc(collection(db, "items"),{
                 title,
+                category:selectedCategory.name,
+                subCategory:selectedSubCategory,
                 images: imageUrls,
                 userId: user.uid,
                 createdAt: new Date()

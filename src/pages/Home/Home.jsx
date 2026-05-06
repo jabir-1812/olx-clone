@@ -1,51 +1,207 @@
-// import { useState, useContext } from "react";
-// import {useNavigate} from "react-router-dom";
-// import { dbContext } from "../../App";
-// import CategoryNavbar from '../../components/CategoryNavBar'
+// import { useEffect, useState } from "react";
 
-// export default function Home(){
-//     const {db}=useContext(dbContext)
-//     const navigate=useNavigate();
-//     console.log(db)
+// import { db } from "../../firebase";
 
-//     return (
-//         <>
-//             <CategoryNavbar/>
-//             <div className="grid grid-cols-4 gap-3 mx-5 my-5">
-//                 {db.map((i)=>{
-//                     return (
-//                     <div 
-//                             key={i.id}
-//                             onClick={()=>navigate(`/product_details/${i.id}`)}
-//                             className="flex flex-col border border-black/25 rounded-md p-2">
-//                         <div className="flex flex-1/2 items-center justify-center">
-//                             <img className="object-cover" src={`/${i?.image}`} alt="" />
-//                         </div>
-//                         <div>
-//                             <div className="font-bold text-2xl">
-//                                 ₹ {i?.price}
-//                             </div>
-//                             <div className="text-black/50">
-//                                 {i?.name}
-//                             </div>
-//                             <div className="text-sm text-black/50">
-//                                 {i?.place}, {i?.district}, {i?.state}
-//                             </div>
-//                         </div>
-//                     </div>
-//                     )
+// import {
+//   collection,
+//   getDocs,
+// } from "firebase/firestore";
+// import { Link } from "react-router-dom";
 
-//                 })}
-//             </div>
-//         </>
-//     );
+// export default function Products() {
+
+//   const [products, setProducts] = useState([]);
+
+//   useEffect(() => {
+
+//     const fetchProducts = async () => {
+
+//       try {
+
+//         const querySnapshot = await getDocs(
+//           collection(db, "items")
+//         );
+
+//         const productList = [];
+
+//         querySnapshot.forEach((doc) => {
+
+//           productList.push({
+//             id: doc.id,
+//             ...doc.data(),
+//           });
+
+//         });
+
+//         setProducts(productList);
+
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+
+//     fetchProducts();
+
+//   }, []);
+
+//   return (
+//     <div>
+
+//       <h1>All Products</h1>
+
+//       {products.map((product) => (
+
+//         <div
+//           key={product.id}
+//           style={{
+//             border: "1px solid gray",
+//             marginBottom: "20px",
+//             padding: "10px",
+//           }}
+//         >
+//             <Link to={`/product_details/${product.id}`}>
+
+//                 <h2>{product.title}</h2>
+
+//                 {/* First image */}
+//                 {product.images?.[0] && (
+//                     <img
+//                     src={product.images[0]}
+//                     width="200"
+//                     alt=""
+//                     />
+//                 )}
+
+//           </Link>
+//         </div>
+
+//       ))}
+
+//     </div>
+//   );
 // }
 
-export default function Home(){
-    return(
-        <div>
-            Home content
+import { useEffect, useState } from "react";
+
+import { db } from "../../firebase";
+
+import {
+  collection,
+  getDocs,
+} from "firebase/firestore";
+
+export default function Products() {
+
+  const [products, setProducts] = useState([]);
+
+  const [selectedCategory, setSelectedCategory] =
+    useState("All");
+
+  useEffect(() => {
+
+    const fetchProducts = async () => {
+
+      try {
+
+        const querySnapshot = await getDocs(
+          collection(db, "items")
+        );
+
+        const productList = [];
+
+        querySnapshot.forEach((doc) => {
+
+          productList.push({
+            id: doc.id,
+            ...doc.data(),
+          });
+
+        });
+
+        console.log("products list==>",productList)
+        setProducts(productList);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProducts();
+
+  }, []);
+
+  // 🔥 Filtered products
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter(
+          (product) =>
+            product.category === selectedCategory
+        );
+
+  return (
+    <div>
+
+      {/* 🔥 Category Buttons */}
+      <div>
+
+        <button
+          onClick={() => setSelectedCategory("All")}
+        >
+          All
+        </button>
+
+        <button
+          onClick={() => setSelectedCategory("Electronic")}
+        >
+          Electronics
+        </button>
+
+        <button
+          onClick={() => setSelectedCategory("Vehicle")}
+        >
+          Vehicles
+        </button>
+
+        <button
+          onClick={() => setSelectedCategory("Furniture")}
+        >
+          Furnitures
+        </button>
+
+      </div>
+
+      <h2>{selectedCategory} Products</h2>
+
+      {/* 🔥 Show filtered products */}
+      {filteredProducts.map((product) => (
+
+        <div
+          key={product.id}
+          style={{
+            border: "1px solid gray",
+            marginBottom: "20px",
+            padding: "10px",
+          }}
+        >
+
+          <h3>{product.title}</h3>
+
+          <p>{product?.category}</p>
+
+          {product.images?.[0] && (
+            <img
+              src={product.images[0]}
+              width="150"
+              alt=""
+            />
+          )}
+
         </div>
-    )
+
+      ))}
+
+    </div>
+  );
 }
 
