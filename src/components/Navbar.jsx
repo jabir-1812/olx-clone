@@ -244,14 +244,17 @@ export function Navbar({isUserLoggedIn}){
 
                             {/* profile dropdown */}
                             {isProfileDropdownOpen && (
-                                <div className="absolute border -bottom-22">
-                                    <div>
+                                <div className="absolute border -bottom-25 flex flex-col gap-1 rounded-sm bg-white px-2 py-1">
+                                    <div className="flex hover:bg-blue-50 border-black/25 py-1 whitespace-nowrap">
                                         <Link to='/my_ads'>My Ads</Link>
                                     </div>
+
                                     <div 
                                         onClick={handleLogout}
-                                        className="bg-red-300"
-                                    >Logout</div>
+                                        className="text-red-500 font-medium cursor-pointer py-1"
+                                    >
+                                        Logout
+                                    </div>
                                 </div>
                             )}
                             

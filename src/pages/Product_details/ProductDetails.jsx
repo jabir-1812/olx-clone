@@ -122,7 +122,7 @@ export default function ProductDetails() {
                     <div className="border-2 border-blue-900 py-2 w-full flex justify-center">Chat with seller</div>
                 </div>
                 <div className="shadow-md p-5">
-                    <div className="font-medium text-2xl">Posted in</div>
+                    <div className="font-medium text-2xl">Posted in: {product.location}</div>
                     <div>{product?.location}</div>
                 </div>
         </div>

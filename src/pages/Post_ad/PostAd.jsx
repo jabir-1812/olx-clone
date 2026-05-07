@@ -120,7 +120,7 @@ function AddPostDetails({
     const [price, setPrice]=useState(0);
     const [priceError, setPriceError]=useState("")
     const [location, setLocation]=useState("kerala")
-    const [email, setEmail]=useState(user.email);
+    const [email, setEmail]=useState(user?.email);
     const [phoneNumber, setPhoneNumber]=useState("9988776655")
     const [itemImages, setItemImages]=useState(Array(12).fill(null))
     const [imageError, setImageError]=useState("")
@@ -201,6 +201,7 @@ function AddPostDetails({
                 description,
                 price,
                 email,
+                location,
                 phoneNumber,
                 category:selectedCategory.name,
                 subCategory:selectedSubCategory,
