@@ -5,6 +5,7 @@ import { auth } from "./firebase";
 
 import './App.css'
 import { Navbar } from "./components/Navbar";
+import Footer from "./components/Footer";
 import Home from "./pages/Home/Home";
 import MyAds from "./pages/My_ads/MyAds";
 import AllCategory from "./pages/Category/AllCategory";
@@ -21,6 +22,7 @@ import ProductDetails from "./pages/Product_details/ProductDetails";
 
 export default function App() {
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(null);
+    const [username, setUsername]=useState('')
 
     useEffect(() => {
         //after successfull register or login, 
@@ -28,7 +30,11 @@ export default function App() {
         //and store the logged in user
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setIsUserLoggedIn(user);
+            console.log("userrrr====>", user.email)
+            setUsername(user.email)
+
         });
+
 
         return () => unsubscribe();
     }, []);
@@ -36,7 +42,7 @@ export default function App() {
     return(
         <>
             <BrowserRouter>
-                <Navbar isUserLoggedIn={isUserLoggedIn}></Navbar>
+                <Navbar isUserLoggedIn={isUserLoggedIn} username={username}></Navbar>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/post_ad" element={<PostAd/>}/>
@@ -44,6 +50,7 @@ export default function App() {
                     <Route path="/my_ads" element={<MyAds/>}/>
                     <Route path="/product_details/:product_id" element={<ProductDetails/>}/>
                 </Routes>
+                <Footer/>
             </BrowserRouter>
         </>
     )

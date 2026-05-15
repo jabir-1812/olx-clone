@@ -140,7 +140,7 @@ export default function Products() {
                             <img
                                 src={product.images[0]}
                                 width=""
-                                className="w-full"
+                                className="h-3/4 object-contain"
                                 alt=""
                             />
                         )}

@@ -9,7 +9,7 @@ import { createUserWithEmailAndPassword,
 
 
 
-export function Navbar({isUserLoggedIn}){
+export function Navbar({isUserLoggedIn, username}){
     const [isTheRegisterAndLoginModalOpen, setIsTheRegisterAndLoginModalOpen] = useState(false)
 
     //this function will show the modal of register form and login form
@@ -91,8 +91,10 @@ export function Navbar({isUserLoggedIn}){
                 if (user) {
                     console.log("User is logged in:", user.email);
                     setIsLoggedIn(true);
+                    
                 }
             });
+            
 
             closeTheRegisterAndLoginModal();
         } catch (error) {
@@ -126,6 +128,7 @@ export function Navbar({isUserLoggedIn}){
             );
 
             console.log("User logged in ===> ",userCredential.user)
+            setUsername(userCredential.user.email)
             closeTheRegisterAndLoginModal();
         } catch (error) {
             if (error.code === "auth/user-not-found") {
@@ -238,22 +241,119 @@ export function Navbar({isUserLoggedIn}){
                             onClick={(e)=>toggleProfileDropdown(e)}
                             className="flex flex-col gap-1 items-center relative">
                             <div 
-                                    className="bg-blue-300 px-2 rounded-full cursor-pointer">
-                                👤
+                                    className="bg-blue-700 h-10 w-10 rounded-full cursor-pointer text-2xl text-white flex items-center justify-center">
+                                U
                             </div>
 
                             {/* profile dropdown */}
                             {isProfileDropdownOpen && (
-                                <div className="absolute border -bottom-25 flex flex-col gap-1 rounded-sm bg-white px-2 py-1">
-                                    <div className="flex hover:bg-blue-50 border-black/25 py-1 whitespace-nowrap">
-                                        <Link to='/my_ads'>My Ads</Link>
+                                
+                                <div className="absolute top-10 right-0  flex flex-col h-150 overflow-scroll lg:w-[300px] bg-white border border-gray-300 shadow-lg">
+
+                                    
+                                    <div className="p-5">
+                                        <div className="flex items-center gap-4 mb-5">
+                                        
+                                       
+                                        <img
+                                            src="https://i.pravatar.cc/100"
+                                            alt="profile"
+                                            className="w-16 h-16 rounded-full border border-yellow-400 object-cover"
+                                        />
+
+                                        
+                                        <h2 className="text-4 font-semibold text-gray-900">
+                                            {username}
+                                        </h2>
+                                        </div>
+
+                                        
+                                        <button className="w-full bg-blue-900 hover:bg-blue-800 text-white font-semibold py-3 rounded">
+                                        View and edit profile
+                                        </button>
                                     </div>
 
-                                    <div 
-                                        onClick={handleLogout}
-                                        className="text-red-500 font-medium cursor-pointer py-1"
-                                    >
-                                        Logout
+                                    
+                                    <div className="border-t border-gray-300"></div>
+
+                                    
+                                    <div className="text-gray-900">
+
+                                        <Link to='/my_ads'>
+                                            <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                                <span className="text-2xl">📄</span>
+                                                <span className="text-[17px]">My Ads</span>
+                                            </div>
+                                        </Link>
+
+                                        <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">📋</span>
+                                        <span className="text-[17px]">Buy Business Packages</span>
+                                        </div>
+
+                                        <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">🛒</span>
+                                        <span className="text-[17px]">View Cart</span>
+                                        </div>
+
+                                        <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">💳</span>
+                                        <span className="text-[17px]">Bought Packages & Billing</span>
+                                        </div>
+
+                                        <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">🎟️</span>
+                                        <span className="text-[17px]">Become an Elite Buyer</span>
+                                        </div>
+
+                                        
+                                        <div className="flex items-center justify-between px-5 py-4 bg-gray-200 hover:bg-gray-300 cursor-pointer">
+                                        <div className="flex items-center gap-4">
+                                            <span className="text-2xl">🎟️</span>
+                                            <span className="text-[17px] leading-5">
+                                            Become an Elite Seller
+                                            </span>
+                                        </div>
+
+                                        <span className="bg-red-700 text-white text-xs px-3 py-1 rounded font-semibold">
+                                            New
+                                        </span>
+                                        </div>
+
+                                        
+                                        <div className="flex items-center gap-4 px-5 py-4 bg-blue-100 cursor-pointer">
+                                        <span className="text-2xl">❓</span>
+                                        <span className="text-[17px]">Help</span>
+                                        </div>
+
+                                        <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">⚙️</span>
+                                        <span className="text-[17px]">Settings</span>
+                                        </div>
+
+                                        
+                                        <div className="flex items-center justify-between px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <div className="flex items-center gap-4">
+                                            <span className="text-2xl">🌐</span>
+                                            <span className="text-[17px]">Language</span>
+                                        </div>
+
+                                        <span className="text-xl">⌄</span>
+                                        </div>
+
+                                        
+                                        <div className="border-t border-gray-300"></div>
+
+                                        <div className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">⬇️</span>
+                                        <span className="text-[17px]">Install OLX Lite app</span>
+                                        </div>
+
+                                        <div onClick={handleLogout} className="flex items-center gap-4 px-5 py-4 hover:bg-gray-100 cursor-pointer">
+                                        <span className="text-2xl">↩️</span>
+                                        <span className="text-[17px]">Logout</span>
+                                        </div>
+
                                     </div>
                                 </div>
                             )}

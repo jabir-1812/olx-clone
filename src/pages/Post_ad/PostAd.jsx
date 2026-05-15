@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {db, auth} from '../../firebase';
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { ImagePlus } from "lucide-react";
 
 export default function PostAd(){
     const categories = [
@@ -257,42 +258,67 @@ function AddPostDetails({
                 </div>
             </div>
 
-            <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
-                <div className="text-xl font-medium">UPLOAD UP TO 12 PHOTOS</div>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-1">
+
+            <div className="flex flex-col gap-3 py-2 px-5 border-b border-black/25">
+                <div className="text-xl font-medium">
+                    UPLOAD UP TO 12 PHOTOS
+                </div>
+
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:w-[50%]">
                     {itemImages.map((img, index) => (
-                        <div key={index} className="border border-blue-900 p-5">
-                            <input
-                                type="file"
-                                accept="image/*"
-                                onChange={(e) =>
+                    <div
+                        key={index}
+                        className="border border-blue-900 rounded-md overflow-hidden"
+                    >
+                        {/* Hidden Input */}
+                        <input
+                            id={`image-upload-${index}`}
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) =>
                                 handleImageChange(index, e.target.files[0])
-                                }
+                            }
+                        />
+
+                        {/* Upload Box */}
+                        {!img ? (
+                        <label
+                            htmlFor={`image-upload-${index}`}
+                            className="h-20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-blue-50"
+                        >
+                            <ImagePlus size={25} className="text-blue-900" />
+
+                            <span className="text-sm font-medium text-blue-900">
+                            Add Photo
+                            </span>
+                        </label>
+                        ) : (
+                        <div className="relative">
+                            {/* Preview */}
+                            <img
+                            src={URL.createObjectURL(img)}
+                            alt="preview"
+                            className="w-full h-40 object-cover"
                             />
 
-                            {/* Preview */}
-                            {img && (
-                                <div>
-                                    <img
-                                        src={URL.createObjectURL(img)}
-                                        alt="preview"
-                                        width="150"
-                                    />
-                                    {/* 🔴 Remove Button */}
-                                    <div>
-                                        <button
-                                            type="button"
-                                            onClick={() => handleRemoveImage(index)}
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
+                            {/* Remove Button */}
+                            <button
+                            type="button"
+                            onClick={() => handleRemoveImage(index)}
+                            className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded cursor-pointer"
+                            >
+                            Remove
+                            </button>
                         </div>
+                        )}
+                    </div>
                     ))}
                 </div>
-                <div className="text-xs text-red-500">{imageError && imageError}</div>
+
+                <div className="text-xs text-red-500">
+                    {imageError && imageError}
+                </div>
             </div>
 
             <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
