@@ -53,8 +53,7 @@ export default function MyProducts() {
   }, []);
 
   return (
-    <>
-    
+    <>    
     <div className="bg-[#f2f4f5] min-h-screen p-3 lg:px-30">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-6">
 
@@ -100,7 +99,9 @@ export default function MyProducts() {
 
             {products.map((product)=>{
                 return(
-                    <div key={product.id} className="bg-white border border-gray-300 rounded-md overflow-hidden">
+                    <div 
+                        onClick={()=>navigate(`/product_details/${product.id}`)}
+                        key={product.id} className="bg-white border border-gray-300 rounded-md overflow-hidden">
 
                         <div className="flex flex-col lg:flex-row">
 
