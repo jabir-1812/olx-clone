@@ -11,8 +11,20 @@ import {
 import { Link } from "react-router-dom";
 
 export default function MyProducts() {
-  const [products, setProducts] = useState([]);
-  const navigate=useNavigate();
+    const [products, setProducts] = useState([]);
+    const navigate=useNavigate();
+
+    const [showAdsPopUpMenu, setShowAdsPopUpMenu] = useState(false);
+    function toggleAdsPopUpMenu(event, productId){
+        console.log("popup menu=====", event)
+        console.log("productId=====", productId)
+        event.stopPropagation();
+        if(showAdsPopUpMenu === productId){
+            setShowAdsPopUpMenu(null)
+        }else{
+            setShowAdsPopUpMenu(productId)
+        }
+    }
 
   useEffect(() => {
 
@@ -42,6 +54,7 @@ export default function MyProducts() {
 
         console.log("product list===> ", productList)
         setProducts(productList);
+        
 
       } catch (error) {
         console.error(error);
@@ -101,7 +114,7 @@ export default function MyProducts() {
                 return(
                     <div 
                         onClick={()=>navigate(`/product_details/${product.id}`)}
-                        key={product.id} className="bg-white border border-gray-300 rounded-md overflow-hidden">
+                        key={product.id} className="bg-white border border-gray-300 rounded-md overflow-visible">
 
                         <div className="flex flex-col lg:flex-row">
 
@@ -119,42 +132,53 @@ export default function MyProducts() {
 
                             <div className="flex-1">
 
-                                <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-5 p-4 border-b border-gray-300">
+                                <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-5 p-4 border-b border-gray-300 ">
 
-                                <div className="flex gap-5">
+                                    <div className="flex gap-5">
 
-                                    <img
-                                    src={product.images[0]}
-                                    alt="ad"
-                                    className="w-20 h-20 object-cover rounded"
-                                    />
+                                        <img
+                                        src={product.images[0]}
+                                        alt="ad"
+                                        className="w-20 h-20 object-cover rounded"
+                                        />
 
-                                    <div className="flex flex-col justify-center">
-                                    <h2 className="font-bold text-2xl text-black">
-                                        {product.title}
-                                    </h2>
+                                        <div className="flex flex-col justify-center">
+                                        <h2 className="font-bold text-2xl text-black">
+                                            {product.title}
+                                        </h2>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="flex items-center text-2xl font-medium">
-                                    ₹ {product.price}
-                                </div>
+                                    <div className="flex items-center text-2xl font-medium">
+                                        ₹ {product.price}
+                                    </div>
 
-                                <div>
-                                    <button className="bg-blue-100 text-blue-900 px-10 py-3 rounded">
+                                    <div>
+                                        <button className="bg-blue-100 text-blue-900 px-10 py-3 rounded">
+                                        
+                                        </button>
+                                    </div>
+
+                                    <div className="bg-gray-100 border-l-4 border-blue-200 p-3 max-w-[380px]">
+                                        <p className="text-[15px]">
                                     
-                                    </button>
-                                </div>
+                                        </p>
+                                    </div>
 
-                                <div className="bg-gray-100 border-l-4 border-blue-200 p-3 max-w-[380px]">
-                                    <p className="text-[15px]">
-                                   
-                                    </p>
-                                </div>
-
-                                <button className="text-3xl leading-none">
-                                    ⋯
-                                </button>
+                                    <div className="relative ">
+                                        <button 
+                                                onClick={(e)=>{toggleAdsPopUpMenu(e, product.id)}}
+                                                className="text-3xl leading-none">
+                                            ⋯
+                                        </button>
+                                        {showAdsPopUpMenu === product.id && (
+                                            <div className="absolute left-0 -bottom-20 py-2 bg-white shadow-xl/30 border border-black/10 rounded-sm">
+                                                <div className="hover:bg-sky-100 px-3 py-1">Edit</div>
+                                                <div className="hover:bg-sky-100 px-3 py-1">Remove</div>
+                                            </div>
+                                        )}
+                                    </div>
+                                
                                 </div>
 
                                 <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 px-6 py-4">
@@ -179,6 +203,8 @@ export default function MyProducts() {
 
                             </div>
                         </div>
+
+
                     </div>
                 )
             })}
