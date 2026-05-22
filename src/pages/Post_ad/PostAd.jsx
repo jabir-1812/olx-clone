@@ -66,7 +66,7 @@ function ChooseCategory({
     return (
         <>
             <div className="text-xl font-medium w-full lg:px-30">CHOOSE A CATEGORY</div>
-            <div className="flex lg:px-30">
+            <div className="flex lg:px-30 mb-70">
             <div className="flex-1">
                 {categories.map((cat)=>{
                     return(

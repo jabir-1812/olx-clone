@@ -128,7 +128,7 @@ export function Navbar({isUserLoggedIn, username}){
             );
 
             console.log("User logged in ===> ",userCredential.user)
-            setUsername(userCredential.user.email)
+            // setUsername(userCredential.user.email)
             closeTheRegisterAndLoginModal();
         } catch (error) {
             if (error.code === "auth/user-not-found") {

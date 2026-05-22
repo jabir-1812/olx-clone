@@ -97,7 +97,7 @@ export default function Products() {
 
       </div>
 
-      <div className="flex py-2">
+      <div className="flex py-2 flex-wrap">
 
             <div
                 className=" flex flex-col justify-center items-center text-xs font-medium"
@@ -123,6 +123,47 @@ export default function Products() {
                 <div>Furniture</div>
             </div>
 
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+            >
+                <img className="bg-blue-50 w-[70%]" src="/books, hobbies.png" alt="" />
+                <div>Books, Sports & Hobbies</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+            >
+                <img className="bg-blue-50 w-[70%]" src="/fashion.png" alt="" />
+                <div>Fashion</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+            >
+                <img className="bg-blue-50 w-[70%]" src="/jobs.png" alt="" />
+                <div>Jobs</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+            >
+                <img className="bg-blue-50 w-[70%]" src="/properties.png" alt="" />
+                <div>Properties</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+            >
+                <img className="bg-blue-50 w-[70%]" src="/services.png" alt="" />
+                <div>Services</div>
+            </div>
+
+            <div
+                className=" flex flex-col justify-center items-center text-xs font-medium"
+            >
+                <img className="bg-blue-50 w-[70%]" src="/pets.png" alt="" />
+                <div>Pets</div>
+            </div>
         </div>
 
 
