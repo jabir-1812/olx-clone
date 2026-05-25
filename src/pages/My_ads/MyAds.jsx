@@ -173,7 +173,7 @@ export default function MyProducts() {
                                         </button>
                                         {showAdsPopUpMenu === product.id && (
                                             <div className="absolute left-0 -bottom-20 py-2 bg-white shadow-xl/30 border border-black/10 rounded-sm">
-                                                <div className="hover:bg-sky-100 px-3 py-1">Edit</div>
+                                                <div className="hover:bg-sky-100 px-3 py-1" onClick={(e)=>{e.stopPropagation(); navigate(`/my_ads/edit_ad/${product.id}`);}}>Edit</div>
                                                 <div className="hover:bg-sky-100 px-3 py-1">Remove</div>
                                             </div>
                                         )}

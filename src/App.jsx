@@ -2,7 +2,7 @@ import { useState, createContext, useEffect } from "react";
 import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-
+import { categoryContext } from "./context/categoryContext";
 import './App.css'
 import { Navbar } from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -15,6 +15,28 @@ import MobileCategory from "./pages/Category/MobileCategory";
 import PostAd from "./pages/Post_ad/PostAd";
 import Success from "./pages/Post_ad/Success";
 import ProductDetails from "./pages/Product_details/ProductDetails";
+import EditAd from "./pages/My_ads/EditAd";
+
+const categories = [
+        {
+        id: 1,
+        name: "Electronic",
+        subcategories: ["Mobile", "Laptop", "Camera"]
+        },
+        {
+        id: 2,
+        name: "Vehicle",
+        subcategories: ["Car", "Bike", "Truck"]
+        },
+        {
+        id: 3,
+        name: "Furniture",
+        subcategories: ["Sofa", "Bed", "Table"]
+        }
+    ];
+
+
+    const subCategories=["Mobile", "Laptop", "Camera", "Car", "Bike", "Truck", "Sofa", "Bed", "Table"]
 
 
 
@@ -41,17 +63,20 @@ export default function App() {
     
     return(
         <>
-            <BrowserRouter>
-                <Navbar isUserLoggedIn={isUserLoggedIn} username={username}></Navbar>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/post_ad" element={<PostAd/>}/>
-                    <Route path="/post_ad/success/:product_id" element={<Success/>}></Route>
-                    <Route path="/my_ads" element={<MyAds/>}/>
-                    <Route path="/product_details/:product_id" element={<ProductDetails/>}/>
-                </Routes>
-                <Footer/>
-            </BrowserRouter>
+            <categoryContext.Provider value={{categories, subCategories}}>
+                <BrowserRouter>
+                    <Navbar isUserLoggedIn={isUserLoggedIn} username={username}></Navbar>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/post_ad" element={<PostAd/>}/>
+                        <Route path="/post_ad/success/:product_id" element={<Success/>}></Route>
+                        <Route path="/my_ads" element={<MyAds/>}/>
+                        <Route path="/my_ads/edit_ad/:product_id" element={<EditAd/>}/>
+                        <Route path="/product_details/:product_id" element={<ProductDetails/>}/>
+                    </Routes>
+                    <Footer/>
+                </BrowserRouter>
+            </categoryContext.Provider>
         </>
     )
 }
