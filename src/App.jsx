@@ -52,8 +52,8 @@ export default function App() {
         //and store the logged in user
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setIsUserLoggedIn(user);
-            console.log("userrrr====>", user.email)
-            setUsername(user.email)
+            console.log("userrrr====>", user?.email)
+            setUsername(user?.email)
 
         });
 

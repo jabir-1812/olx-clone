@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import {db, auth} from '../../firebase';
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { ImagePlus } from "lucide-react";
+import { ImagePlus, Camera } from "lucide-react";
+
 
 export default function PostAd(){
     const categories = [
@@ -23,33 +24,49 @@ export default function PostAd(){
         }
     ];
 
+    
+
     const [selectedCategory, setSelectedCategory]=useState(null)
     const [selectedSubCategory, setSelectedSubCategory]=useState(null)
 
-    return(
-        <>
-            <div className="font-bold text-2xl flex justify-center w-full py-3 shadow-sm">POST YOUR AD</div>
-            {
-                (selectedCategory && selectedSubCategory) ? 
-                (
-                    <div className="lg:px-30">
-                        <AddPostDetails 
+
+    const navigateHome=useNavigate();
+    const user = auth.currentUser;
+    useEffect(() => {
+        if (!user) {
+            alert("login first");
+            navigateHome('/');
+        }
+    }, [user]);
+
+    if (!user) {
+        return null;
+    }
+    
+        return(
+            <>
+                <div className="font-bold text-2xl flex justify-center w-full py-3 shadow-sm">POST YOUR AD</div>
+                {
+                    (selectedCategory && selectedSubCategory) ? 
+                    (
+                        <div className="lg:px-30">
+                            <AddPostDetails 
+                                selectedCategory={selectedCategory}
+                                selectedSubCategory={selectedSubCategory}/>
+                        </div>
+                    )
+                    :
+                    (
+                        <ChooseCategory 
+                            categories={categories}
                             selectedCategory={selectedCategory}
-                            selectedSubCategory={selectedSubCategory}/>
-                    </div>
-                )
-                :
-                (
-                    <ChooseCategory 
-                        categories={categories}
-                        selectedCategory={selectedCategory}
-                        setSelectedCategory={setSelectedCategory}
-                        selectedSubCategory={selectedSubCategory}
-                        setSelectedSubCategory={setSelectedSubCategory}/>
-                )
-            }
-        </>
-    )
+                            setSelectedCategory={setSelectedCategory}
+                            selectedSubCategory={selectedSubCategory}
+                            setSelectedSubCategory={setSelectedSubCategory}/>
+                    )
+                }
+            </>
+        )    
 }
 
 
@@ -226,7 +243,7 @@ function AddPostDetails({
         };
     }, [itemImages]);
     return(
-        <div className="border-2 border-black/20 py-5">
+        <div className="border-2 border-black/20 py-5 mx-32">
             <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
                 <div className="text-xl font-medium">SELECTED CATEGORY</div>
                 <div className="flex gap-5 text-sm font-medium">
@@ -287,7 +304,7 @@ function AddPostDetails({
                             htmlFor={`image-upload-${index}`}
                             className="h-20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-blue-50"
                         >
-                            <ImagePlus size={25} className="text-blue-900" />
+                            <Camera size={25} className="text-blue-900"/>
 
                             <span className="text-sm font-medium text-blue-900">
                             Add Photo
@@ -354,3 +371,5 @@ function AddPostDetails({
         </div>
     )
 }
+
+

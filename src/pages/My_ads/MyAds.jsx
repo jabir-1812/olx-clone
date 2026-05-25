@@ -6,7 +6,9 @@ import {
   collection,
   query,
   where,
+  doc,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 import { Link } from "react-router-dom";
 
@@ -23,6 +25,32 @@ export default function MyProducts() {
             setShowAdsPopUpMenu(null)
         }else{
             setShowAdsPopUpMenu(productId)
+        }
+    }
+
+    const [showDeletePopup, setShowDeletePopup] = useState(false)
+    function openDeletePopup(productId){
+        console.log("workingggggg....")
+        setShowDeletePopup(productId)
+    }
+
+
+    async function handleRemove(product_id){
+
+        try {
+            await deleteDoc(doc(db, 'items', product_id));
+
+            alert("product removed");
+            setShowDeletePopup(false)
+
+             // remove from UI instantly
+            setProducts((prev) =>
+                prev.filter((p) => p.id !== product_id)
+            );
+
+        } catch (error) {
+            console.log("error deleting the product:", error);
+            alert("failed to remove the product")
         }
     }
 
@@ -174,7 +202,44 @@ export default function MyProducts() {
                                         {showAdsPopUpMenu === product.id && (
                                             <div className="absolute left-0 -bottom-20 py-2 bg-white shadow-xl/30 border border-black/10 rounded-sm">
                                                 <div className="hover:bg-sky-100 px-3 py-1" onClick={(e)=>{e.stopPropagation(); navigate(`/my_ads/edit_ad/${product.id}`);}}>Edit</div>
-                                                <div className="hover:bg-sky-100 px-3 py-1">Remove</div>
+                                                <div className="hover:bg-sky-100 px-3 py-1" onClick={ (e)=> {e.stopPropagation(); openDeletePopup(product.id)}}>
+                                                    Remove
+                                                    {showDeletePopup === product.id && (
+                                                        <div className="fixed inset-0 bg-black/85 flex items-center justify-center z-50">
+            
+                                                            <div className="bg-white w-[550px] rounded p-8">
+
+                                                                <h1 className="text-4xl font-bold text-center mb-8" >
+                                                                    Confirm
+                                                                </h1>
+
+                                                                <p className="text-gray-500 text-lg mb-10">
+                                                                    You are about to delete your Ad. You won't be able to undo this.
+                                                                </p>
+
+                                                                <div className="flex gap-4">
+
+                                                                    <button
+                                                                        onClick={()=>{handleRemove(product.id)}}
+                                                                        className="flex-1 bg-blue-800 text-white py-4 rounded font-semibold text-xl hover:bg-blue-900"
+                                                                    >
+                                                                        Remove
+                                                                    </button>
+
+                                                                    <button
+                                                                        onClick={(e)=>{e.stopPropagation(); setShowDeletePopup(false)}}
+                                                                        className="flex-1 border-2 border-blue-800 text-blue-800 py-4 rounded font-semibold text-xl hover:bg-gray-100"
+                                                                    >
+                                                                        Cancel
+                                                                    </button>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         )}
                                     </div>

@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import { db, auth } from "../../firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { updateDoc } from "firebase/firestore";
+import { ImagePlus, Camera } from "lucide-react";
+
 
 export default function EditAd() {
     const user = auth.currentUser;
@@ -147,109 +149,133 @@ export default function EditAd() {
     }
 
     return (
-        <div>
-            <div>Category</div>
+        <div className="border-2 border-black/20 py-5 mx-30">
+            <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
+                <div className="text-xl font-medium">Category</div>
 
-            <div>
-                <select onChange={(e)=>{setProduct((prev)=>{return {...prev,subCategory:e.target.value }})}} value={product?.subCategory || ""}>
-                    {subCategories.map((s, i) => {
-                        return (
-                            <option key={i}>
-                                {s}
-                            </option>
-                        );
-                    })}
-                </select>
+                <div >
+                    <select 
+                        className="h-12 border border-black/50 rounded-md w-1/4"
+                        onChange={(e)=>{setProduct((prev)=>{return {...prev,subCategory:e.target.value }})}} 
+                        value={product?.subCategory || ""}>
+                        {subCategories.map((s, i) => {
+                            return (
+                                <option key={i}>
+                                    {s}
+                                </option>
+                            );
+                        })}
+                    </select>
+                </div>
+            </div>
+            
+
+            <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
+                <div className="text-xl font-medium">INCLUDE SOME DETAILS</div>
+                <div>
+                    <div className="text-xs font-medium">Ad title *</div>
+                    <input
+                        onChange={(e)=>{setProduct((prev)=> {return {...prev, title:e.target.value}})}}
+                        value={product?.title || ""}
+                        type="text"
+                        required 
+                        className="h-12 border border-black/50 rounded-md w-1/2" 
+                    />
+                    {/* <div className="text-red-500 text-sm font-medium">{titleError && titleError}</div> */}
+                </div>
+                <div>
+                    <div className="text-xs font-medium">Description *</div>
+                    <textarea 
+                        value={product?.description || ""}
+                        onChange={(e)=>setProduct((prev)=>{return {...prev, description:e.target.value}})} 
+                        className="h-32 border border-black/50 rounded-md w-1/2">
+
+                    </textarea>
+                    {/* <div className="text-red-500 text-sm font-medium">{descriptionError && descriptionError}</div> */}
+                </div>
             </div>
 
-            <div>Title</div>
-
-            <div>
-                <input
-                    onChange={(e)=>{setProduct((prev)=> {return {...prev, title:e.target.value}})}}
-                    value={product?.title || ""}
-                    type="text"
-                />
+            <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
+                <div className="text-xl font-medium">SET A PRICE</div>
+                <div>
+                    <div className="text-xs font-medium">Price *</div>
+                    <input 
+                        placeholder="₹"
+                        type="number"
+                        step="1"
+                        value={product?.price ?? ""}
+                        onWheel={(e) => e.currentTarget.blur()}
+                        onChange={(e) =>
+                            setProduct((prev) => ({
+                                ...prev,
+                                price:
+                                    e.target.value === ""
+                                        ? ""
+                                        : Number(e.target.value),
+                            }))
+                        } 
+                        className="h-12 border border-black/50 rounded-md w-1/2" />
+                    {/* <div className="text-red-500 text-sm font-medium">{priceError && priceError}</div> */}
+                </div>
             </div>
 
-            <div>Description</div>
+            <div className="flex flex-col gap-3 py-2 px-5 border-b border-black/25">
+                <div className="text-xl font-medium">
+                    UPLOAD UP TO 12 PHOTOS
+                </div>
 
-            <div>
-                <textarea
-                    onChange={(e)=>setProduct((prev)=>{return {...prev, description:e.target.value}})}
-                    value={product?.description || ""}
-                />
-            </div>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:w-[50%]">
+                        {images.map((img, index) => {
+                            return (
+                                <div
+                                    key={index}
+                                    className="border border-blue-900 rounded-md overflow-hidden relative"
+                                >
+                                    {img ? (
+                                        <>
+                                            <img
+                                                src={img.preview}
+                                                alt=""
+                                               className="object-cover"
+                                            />
 
-            <div>Price</div>
+                                            <button
+                                                type="button"
+                                                onClick={() => removeImage(index)}
+                                                className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded cursor-pointer"
+                                            >
+                                                Remove
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <label
+                                                htmlFor={`image-upload-${index}`}
+                                                className="h-20 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-blue-50">
+                                                    <Camera size={25} className="text-blue-900"/>
 
-            <div>
-                <input
-                    type="number"
-                    step="1"
-                    value={product?.price ?? ""}
-                    onWheel={(e) => e.currentTarget.blur()}
-                    onChange={(e) =>
-                        setProduct((prev) => ({
-                            ...prev,
-                            price:
-                                e.target.value === ""
-                                    ? ""
-                                    : Number(e.target.value),
-                        }))
-                    }
-                />
-            </div>
-
-            <div>Images</div>
-
-            <div
-                style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(4, 1fr)",
-                    gap: "10px",
-                }}
-            >
-                {images.map((img, index) => {
-                    return (
-                        <div
-                            key={index}
-                            style={{
-                                border: "1px solid gray",
-                                padding: "10px",
-                            }}
-                        >
-                            {img ? (
-                                <>
-                                    <img
-                                        src={img.preview}
-                                        alt=""
-                                        width="100%"
-                                        height="150px"
-                                        style={{
-                                            objectFit: "cover",
-                                        }}
-                                    />
-
-                                    <button
-                                        type="button"
-                                        onClick={() => removeImage(index)}
-                                    >
-                                        Remove
-                                    </button>
-                                </>
-                            ) : (
-                                <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) =>
-                                        handleImageChange(e, index)
-                                    }
-                                />
-                            )}
-                        </div>
-                    );
-                })}
+                                                    <span className="text-sm font-medium text-blue-900">
+                                                        Add Photo
+                                                    </span>
+                                            </label>
+                                            <input
+                                                id={`image-upload-${index}`}
+                                                type="file"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={(e) =>
+                                                    handleImageChange(e, index)
+                                                }
+                                            />
+                                        </>
+                                    )}
+                                </div>
+                            );
+                        })}
+                </div>
+                <div className="text-xs text-red-500">
+                    {/* {imageError && imageError} */}
+                </div>
             </div>
 
             <div className="flex flex-col gap-3 py-2 px-5 border-b-1 border-black/25">
@@ -279,8 +305,8 @@ export default function EditAd() {
                 </div>
             </div>
 
-            <div>
-                <button onClick={handleSubmit}>Submit</button>
+            <div className="py-2 px-5 border-b-1 border-black/25">
+                <button className="p-3 rounded-md text-white font-medium bg-blue-400 text-md" onClick={handleSubmit}>Submit</button>
             </div>
         </div>
     );
