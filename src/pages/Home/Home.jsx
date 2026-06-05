@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { auth } from "../../firebase";
 
 import { db } from "../../firebase";
 
@@ -24,6 +25,8 @@ export default function Products() {
     const fetchProducts = async () => {
 
       try {
+        console.log("Current user:", auth.currentUser);
+        console.log("DB instance:", db);
 
         const querySnapshot = await getDocs(
           collection(db, "items")

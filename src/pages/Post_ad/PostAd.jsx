@@ -316,7 +316,7 @@ function AddPostDetails({
                             <img
                             src={URL.createObjectURL(img)}
                             alt="preview"
-                            className="w-full h-40 object-cover"
+                            className="object-cover"
                             />
 
                             {/* Remove Button */}
